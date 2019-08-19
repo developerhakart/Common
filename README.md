@@ -1,2 +1,2 @@
 # Common
-Common library .net core
+Common library of .net core
