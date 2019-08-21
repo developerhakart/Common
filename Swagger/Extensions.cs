@@ -48,7 +48,7 @@ namespace Common.Swagger
                 return builder;
             }
 
-            var routePrefix = string.IsNullOrWhiteSpace(options.RoutePrefix) ? "swagger" : options.RoutePrefix;
+            var routePrefix =  options.RoutePrefix;
 
             builder.UseStaticFiles()
                 .UseSwagger(c => c.RouteTemplate = routePrefix + "/{documentName}/swagger.json");
@@ -61,8 +61,8 @@ namespace Common.Swagger
                 })
                 : builder.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint($"/{routePrefix}/{options.Name}/swagger.json", options.Title);
-                    c.RoutePrefix = routePrefix == "swagger" ? string.Empty : routePrefix;
+                    c.SwaggerEndpoint(string.IsNullOrEmpty(routePrefix) ? $"{options.Name}/swagger.json" : $"/{routePrefix}/{options.Name}/swagger.json", options.Title);
+                    c.RoutePrefix = routePrefix;
                     
                 });
         }
